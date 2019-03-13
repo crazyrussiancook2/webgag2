@@ -1,0 +1,23 @@
+function addingCommentsLikes(commentsArray,callback){
+    var id;
+    var comment;
+    var i=0;
+    for(var p=0;p<commentsArray.length;p++){
+        comment=commentsArray[p];
+        id=comment.commentID;
+        sql.query(queryCommentsNumberOfLikes,[id],(err,res) => {
+            console.log(res);
+            var numberOfLikes=res[0].CommentNumOfLikes;
+            if (err){
+                throw err;
+            }
+            else {
+                i++;
+                commentsArray[p].CommentNumOfLikes=numberOfLikes;
+                if(i==commentsArray.length){
+                    callback(commentsArray);
+                }
+            } 
+        })
+    }
+}
